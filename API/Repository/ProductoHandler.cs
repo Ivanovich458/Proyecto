@@ -1,4 +1,4 @@
-﻿using System.Data.SqlClient;
+using System.Data.SqlClient;
 
 namespace MiPrimeraApi.Repository
 {
@@ -38,7 +38,125 @@ namespace MiPrimeraApi.Repository
             }
             return productos;
         }
+            public static void Delete(Producto producto)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(connectionstring))
+                    {
+
+                        string querydelete = "DELETE FROM Producto WHERE Id = @idProducto";
+
+                        double id = 1;
+
+                        SqlParameter parameter = new SqlParameter();
+
+                        parameter.ParameterName = "idProducto";
+                        parameter.Value = id;
+                        parameter.SqlValue = System.Data.SqlDbType.BigInt;
+
+                        using (SqlCommand sqlCommand = new SqlCommand(querydelete, sqlConnection))
+                        {
+                            sqlCommand.Parameters.Add(parameter);
+                            int filasModificadas = sqlCommand.ExecuteNonQuery();
+                        }
+
+                    }
+                }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
+            }
+            public static void Update(Producto producto)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(connectionstring))
+                    {
+                        string queryupdate = "UPDATE [SistemaGestion].[dbo].[Producto]" +
+                            "SET Descripcion =@NuevaDescripciones" +
+                            "Costo =@NuevoCosto" +
+                            "PrecioVenta=@NuevoPrecioVenta" +
+                            "Stock=@NuevoStock" +
+                            "IdUsuario=@NuevoIdUsuario" +
+                            "WHERE Id = Id";
+
+
+                        SqlParameter parameterDescripcion = new SqlParameter();
+                        parameterDescripcion.ParameterName = "NuevaDescripciones";
+                        parameterDescripcion.Value = producto.Descripciones;
+                        parameterDescripcion.SqlDbType = System.Data.SqlDbType.VarChar;
+
+                        SqlParameter parameterCosto = new SqlParameter();
+                        parameterCosto.ParameterName = "NuevoCosto";
+                        parameterCosto.Value = producto.Costo;
+                        parameterCosto.SqlDbType = System.Data.SqlDbType.Int;
+
+
+                        SqlParameter parameterPrecioVenta = new SqlParameter();
+                        parameterPrecioVenta.ParameterName = "NuevoPrecioVenta";
+                        parameterPrecioVenta.Value = producto.PrecioVenta;
+                        parameterPrecioVenta.SqlDbType = System.Data.SqlDbType.Int;
+
+
+                        SqlParameter parameterStock = new SqlParameter();
+                        parameterStock.ParameterName = "NuevoStock";
+                        parameterStock.Value = producto.Stock;
+                        parameterStock.SqlDbType = System.Data.SqlDbType.Int;
+
+
+                        SqlParameter parameterIdUsuario = new SqlParameter();
+                        parameterIdUsuario.ParameterName = "NuevoIdUsuario";
+                        parameterIdUsuario.Value = producto.IdUsuario;
+                        parameterIdUsuario.SqlDbType = System.Data.SqlDbType.VarChar;
+
+                        SqlParameter parameterId = new SqlParameter();
+                        parameterId.ParameterName = "Id";
+                        parameterId.Value = producto.Id;
+                        parameterId.SqlDbType = System.Data.SqlDbType.VarChar;
+
+                        sqlConnection.Open();
+
+                        using (SqlCommand sqlcommand = new SqlCommand(queryupdate, sqlConnection))
+                        {
+                            sqlcommand.Parameters.Add((parameterDescripcion));
+                            sqlcommand.Parameters.Add((parameterCosto));
+                            sqlcommand.Parameters.Add((parameterPrecioVenta));
+                            sqlcommand.Parameters.Add((parameterStock));
+                            sqlcommand.Parameters.Add((parameterIdUsuario));
+                            sqlcommand.Parameters.Add((parameterId));
+                            sqlcommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                { Console.WriteLine(ex.Message); }
+            }
+            public static void Insert(Producto producto)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(connectionstring))
+                    {
+                        string queryinsert = "INSERT INTO Producto [SistemaGestion].[dbo].[Producto] (Descripciones, Costo, PrecioVenta, Stock, IdUsuario) " +
+                            "VALUES('Ivan', 'Herrera Miranda', 'IvHerreraMiranda', 'Pass123', 'IvanHM@gmail.com');";
+
+                        sqlConnection.Open();
+
+                        using (SqlCommand sqlcommand = new SqlCommand(queryinsert, sqlConnection))
+                        {
+                            sqlcommand.ExecuteScalar();
+                        }
+                        sqlConnection.Close();
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
     }
+        
 }
 
+
+    
     
