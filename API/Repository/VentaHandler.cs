@@ -1,4 +1,4 @@
-﻿using System.Data.SqlClient;
+using System.Data.SqlClient;
 
 namespace MiPrimeraApi.Repository
 {
@@ -37,6 +37,59 @@ namespace MiPrimeraApi.Repository
             }
 
             return ventas;
+        }
+        public static void Delete(Venta venta)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(connectionstring))
+                {
+
+                    string querydelete = "DELETE FROM Venta WHERE Id = @idVenta";
+
+                    double id = 1;
+
+                    SqlParameter parameter = new SqlParameter();
+
+                    parameter.ParameterName = "idVenta";
+                    parameter.Value = id;
+                    parameter.SqlValue = System.Data.SqlDbType.BigInt;
+
+                    using (SqlCommand sqlCommand = new SqlCommand(querydelete, sqlConnection))
+                    {
+                        sqlCommand.Parameters.Add(parameter);
+                        int filasModificadas = sqlCommand.ExecuteNonQuery();
+                    }
+
+                }
+            }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine(ex.Message); 
+            }
+        }
+        public static void InsertVenta(Venta venta)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(connectionstring))
+                {
+                    string queryVenta = "INSERT INTO Venta [SistemaGestion].[dbo].[Venta] (Id, Comentarios " +
+                        "VALUES('7', 'Comentarios');";
+                    
+                    sqlConnection.Open();
+
+                    using (SqlCommand sqlcommand = new SqlCommand(queryVenta, sqlConnection))
+                    {
+                        sqlcommand.ExecuteScalar();
+                    }
+                    sqlConnection.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
