@@ -40,6 +40,20 @@ namespace MiPrimeraApi.Repository
 
             return productovendidos;
         }
+        public static void InsertVenta()
+        {
+            try
+            {
+                SqlConnection sqlConnection = new SqlConnection(connectionstring);
+                string queryInsert = "INSERT INTO ProductoVendido [SistemaGestion].[dbo].[ProductoVendido] ('Stock', 'IdProducto', 'IdVenta')" +
+                    "VALUES ('20', '11', '7');";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
     }
 }
     
