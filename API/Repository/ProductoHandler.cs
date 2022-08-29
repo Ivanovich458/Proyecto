@@ -38,7 +38,7 @@ namespace MiPrimeraApi.Repository
             }
             return productos;
         }
-            public static void Delete(Producto producto)
+            public static void Delete(int id)
             {
                 try
                 {
@@ -47,12 +47,12 @@ namespace MiPrimeraApi.Repository
 
                         string querydelete = "DELETE FROM Producto WHERE Id = @idProducto";
 
-                        double id = 1;
+                        double idProducto = 1;
 
                         SqlParameter parameter = new SqlParameter();
 
                         parameter.ParameterName = "idProducto";
-                        parameter.Value = id;
+                        parameter.Value = idProducto;
                         parameter.SqlValue = System.Data.SqlDbType.BigInt;
 
                         using (SqlCommand sqlCommand = new SqlCommand(querydelete, sqlConnection))
