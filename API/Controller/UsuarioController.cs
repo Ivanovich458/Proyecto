@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using MiPrimeraApi.Controllers.DTOS;
+using MiPrimeraApi.Repository;
 
 namespace MiPrimeraApi.Controllers
 {
@@ -13,19 +14,19 @@ namespace MiPrimeraApi.Controllers
             return Repository.UsuarioHandler.GetUsuarios();
         }
         [HttpPost(Name = "PostUsuario" ) ]
-        public void CreateUsuario([FromBody] PostUsuario usuario)
+        public void CreateUsuario([FromBody] Usuario usuario) //PostUsuario
         {
-            
+             UsuarioHandler.Insert(usuario);
         }
         [HttpDelete(Name ="DeleteUsuario")]
-        public void DeleteUsuario([FromBody]int id)
+        public void DeleteUsuario([FromBody] int id)
         {
-
+            UsuarioHandler.Delete(id);
         }
         [HttpPut(Name ="PutUsuario")]
-        public void ModifyUsuario([FromBody] PutUsuario usuario)
+        public void ModifyUsuario([FromBody] Usuario usuario) //PutUsuario
         {
-
+            UsuarioHandler.Update(usuario);
         }
     }
 }
