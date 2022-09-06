@@ -1,3 +1,4 @@
+using MiPrimeraApi.Controllers.DTOS;
 using System.Data.SqlClient;
 
 namespace MiPrimeraApi.Repository
@@ -38,7 +39,7 @@ namespace MiPrimeraApi.Repository
             }
             return productos;
         }
-            public static void Delete(int id)
+            public static void DeleteProducto(int id)
             {
                 try
                 {
@@ -65,7 +66,7 @@ namespace MiPrimeraApi.Repository
                 }
                 catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
-            public static void Update(Producto producto)
+            public static void ModifyProducto( PutProducto producto)
             {
                 try
                 {
@@ -130,14 +131,14 @@ namespace MiPrimeraApi.Repository
                 catch (Exception ex)
                 { Console.WriteLine(ex.Message); }
             }
-            public static void Insert(Producto producto)
+            public static void CreateProducto(PostProducto producto)
             {
                 try
                 {
                     using (SqlConnection sqlConnection = new SqlConnection(connectionstring))
                     {
                         string queryinsert = "INSERT INTO Producto [SistemaGestion].[dbo].[Producto] (Descripciones, Costo, PrecioVenta, Stock, IdUsuario) " +
-                            "VALUES('Ivan', 'Herrera Miranda', 'IvHerreraMiranda', 'Pass123', 'IvanHM@gmail.com');";
+                            "VALUES('Campera de Cuero', '3.000', '3.500', '30', '10');";
 
                         sqlConnection.Open();
 
