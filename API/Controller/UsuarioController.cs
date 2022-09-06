@@ -14,21 +14,51 @@ namespace MiPrimeraApi.Controllers
             return Repository.UsuarioHandler.GetUsuarios();
         }
         [HttpPost(Name = "PostUsuario" ) ]
-        public void CreateUsuario([FromBody] Usuario usuario) //PostUsuario
+        public void CreateUsuario([FromBody] PostUsuario usuario) //PostUsuario
         {
-             UsuarioHandler.Insert(usuario);
+            try
+            {
+            return UsuarioHandler.CreateUsuario(new Usuario
+                (
+                Id = usuario.Id,
+                Nombre = usuario.Nombre,
+                Apellido = usuario.Apellido,
+                NombreUsuario = usuario.NombreUsuario,
+                Contraseña = usuario.Contraseña,
+                Mail = usuario.Mail));
+
+            }
+           catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
         }
-        [HttpDelete(Name ="DeleteUsuario")]
-        public void DeleteUsuario([FromBody] int id)
-        {
-            UsuarioHandler.Delete(id);
-        }
+        [HttpDelete(Name = "DeleteUsuario")]
+        public void DeleteUsuario([FromBody] int id) => UsuarioHandler.DeleteUsuario(id);
+        
         [HttpPut(Name ="PutUsuario")]
-        public void ModifyUsuario([FromBody] Usuario usuario) //PutUsuario
+        public void ModifyUsuario([FromBody] PutUsuario usuario) //PutUsuario
         {
-            UsuarioHandler.Update(usuario);
+            try
+            {
+            return UsuarioHandler.ModifyUsuario(new Usuario
+                (
+                Id = usuario.Id, 
+                Nombre = usuario.Nombre, 
+                Apellido = usuario.Apellido, 
+                NombreUsuario = usuario.NombreUsuario, 
+                Contraseña = usuario.Contraseña, 
+                Mail = usuario.Mail
+                ));
+
+            }
+            
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
         }
     }
 }
-    
-
