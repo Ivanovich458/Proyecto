@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using MiPrimeraApi.Controllers.DTOS;
 
 namespace MiPrimeraApi.Controllers
@@ -15,17 +15,19 @@ namespace MiPrimeraApi.Controllers
         [HttpPost(Name ="PostVenta")]
         public void CreateVenta([FromBody] PostVenta venta)
         {
-
+            try
+            {
+                Repository.VentaHandler.CreateVenta(new Venta
+                    (
+                    Id = venta.Id,
+                    Comentario = venta.Comentarios
+                    )); 
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
-        [HttpDelete(Name ="DeleteVenta")]
-        public void DeleteVenta([FromBody]int id)
-        {
-
-        }
-        [HttpPut(Name ="PutVenta")]
-        public void ModifyVenta([FromBody]PutVenta venta)
-        {
-
-        }
+        [HttpDelete(Name = "DeleteVenta")]
+        public void DeleteVenta([FromBody] int id) => Repository.VentaHandler.DeleteVenta(id);
     }
-}
